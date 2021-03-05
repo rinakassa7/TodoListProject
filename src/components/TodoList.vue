@@ -1,61 +1,56 @@
 <template>
-    <div>
-        <form @submit.prevent="addTodo(idList)">
+    <main>
+        <form @submit.prevent="addTodo(id)">
             <input type="text" v-model="newTodo">
             <input type="submit" value="Add todo">
         </form>
-        <select v-model="filter">
-            <option value="all">All</option>
-            <option value="completed">Completed</option>
-            <option value="not-completed">Not Completed</option>
-        </select>
+        <p class="filters">
+            <button @click="setFilter('all')">All</button>
+            <button @click="setFilter('completed')">Completed</button>
+            <button @click="setFilter('not-completed')">Not Completed</button>
+        </p>
         <ul>
-            <li v-for="todo in todos" :key="todo.id" @click="todoCompleted(idList, todo.id)">
+            <li v-for="todo in filteredTodos(id)" :key="todo.id" @click="todoCompleted([id, todo.id])">
                 <span :class="{ completed: todo.completed }"><input type="checkbox" :checked="todo.completed">{{todo.name}}</span>
-                <button @click.stop="removeTodo(idList, todo.id)">&times;</button>
+                <button @click.stop="removeTodo([id, todo.id])">&times;</button>
             </li>
         </ul>
-    </div>
+        <p>Vous avez <strong>{{ remainingTodos(id) }}</strong> tâche(s) à faire</p>
+    </main>
 </template>
 
 <script>
-import {mapState, mapGetters, mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'TodoList',
   props: {
-    idList: {type: Number, default: 0}
+    id: {type: Number}
   },
   methods: {
-    ...mapActions(['addTodo', 'removeTodo', 'todoCompleted'])
+    ...mapActions('todoList', ['addTodo', 'removeTodo', 'todoCompleted']),
+    setFilter(value) {
+      this.$store.commit('todoList/SET_FILTER', value)
+    }
   },
   computed: {
-    ...mapState(['todos']),
-    ...mapGetters(['filteredTodos']),
-    todos() {
-      return this.filteredTodos(this.idList)
-    },
+    ...mapGetters('todoList', ['filteredTodos', 'remainingTodos']),
     newTodo: {
       get() {
         return this.$store.state.newTodo
       },
       set(value) {
-        this.$store.commit('SET_NEW_TODO', value)
+        this.$store.commit('todoList/SET_NEW_TODO', value)
       }
-    },
-    filter: {
-      get() {
-        return this.$store.state.filter
-      },
-      set(value) {
-        this.$store.commit('SET_FILTER', value)
-      }
-    }   
-  }
+    },   
+  },
 }
 </script>
 
 <style scoped>
+main {
+  grid-area: section;
+}
 ul {
     list-style: none;
     margin: 0;
@@ -66,25 +61,21 @@ li {
     display: flex;
     justify-content: space-between;
     padding: .5rem 2rem;
-    margin-bottom: .5rem;
+    margin: .5rem 0;
 }
 li:hover {
     background: #eee;
+}
+.filters {
+  margin-bottom: .5rem;
+}
+.filters button {
+  margin-right: .5rem;
 }
 input[type="checkbox"] {
     margin-right: .5rem;
 }
 .completed {
     text-decoration: line-through;
-}
-select, input[type="text"], input[type="submit"] {
-    padding: .5rem 2rem;
-    margin-bottom: 1rem;
-}
-form {
-    margin-top: 1rem;
-}
-input[type="submit"] {
-    margin-left: .5rem;
 }
 </style>
