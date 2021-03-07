@@ -1,5 +1,6 @@
 <template>
-    <aside>
+
+    <aside class="shadow-lg p-3 mb-5 bg-body rounded">
         <form @submit.prevent="addList()">
             <input type="text" v-model="newList">
             <input type="submit" value="Add list">
@@ -11,9 +12,11 @@
                 @click="loadList(list.id)"
             >
                 {{ list.name }}
+               <span> <button @click.stop="removeList([list.id])">&times;</button> </span>
             </li>
         </ul>
     </aside>
+
 </template>
 
 <script>
@@ -36,7 +39,7 @@ export default {
         },
     },
     methods: {
-        ...mapActions('todoList', ['addList']),
+        ...mapActions('todoList', ['addList','removeList']),
         loadList (id) {
             this.$emit('loadList', id)
         }
@@ -45,15 +48,25 @@ export default {
 </script>
 
 <style scoped>
+
 aside {
   grid-area: sidebar;
 }
-li {
-  color: DodgerBlue;
+ul {
+    list-style: none;
+    padding: 0;
+    
+}
+li{
+   padding: 5px 5px 5px 5px;
+   margin-top: 5px;
+}
+li span{
+    float: right;
+    margin-top: -3.5px;
 }
 li:hover {
-  font-weight: bold;
-  cursor: pointer;
+    background: #eee;
 }
 .activeList {
     color: Tomato;

@@ -1,5 +1,5 @@
 <template>
-    <main>
+    <main class="shadow-lg p-3 mb-5 bg-body rounded">
         <form @submit.prevent="addTodo(id)">
             <input type="text" v-model="newTodo">
             <input type="submit" value="Add todo">

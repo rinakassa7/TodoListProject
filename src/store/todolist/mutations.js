@@ -7,6 +7,10 @@ export function REMOVE_TODO(state, [idList, idTodo]) {
     state.lists[idList].todos.splice(idTodo, 1)
 }
 
+export function REMOVE_LIST(state, [idList]) {
+    state.lists.splice(idList, 1)
+}
+
 export function ADD_TODO(state, idList) {
     const todo = {
         id: state.lists[idList].todos.length,
