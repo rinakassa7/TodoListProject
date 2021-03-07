@@ -11,7 +11,7 @@ import Title from '@/components/Title.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import TodoList from '@/components/TodoList.vue'
 
-const axios = require('axios');
+//const axios = require('axios');
 /*<p v-if="info != null"> {{info["data"].token}} </p>*/
 export default {
   name: 'App',
@@ -33,12 +33,13 @@ export default {
       this.activeList = id
     }
   },
+  /*
   mounted () {
     axios
       .post('http://138.68.74.39/api/login?email=toto@toto.com&password=totototo')
       .then(response => (this.info = response))
       console.log(this.info)
-  }
+  }*/
 }
 </script>
 

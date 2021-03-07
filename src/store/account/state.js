@@ -1,5 +1,9 @@
-/*const state = {
-    id_user: 0,
-    user: null,
-    posts: null,
-};*/
+export default function() {
+    return {
+        user: [{
+            token: null,
+            name:null,
+            email: null,
+        }]      
+    }
+}
