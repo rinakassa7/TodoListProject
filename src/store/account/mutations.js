@@ -1,14 +1,8 @@
-export function SET_USER(state, newUser){
-    state.user.name = newUser.name;
-    state.user.email = newUser.email;
+export function ADD_USER (state, [token,name,email]){
+    state.user.token = token
+    state.user.name = name
+    state.user.email = email
 }
-
-export function SET_TOKEN(state, newToken){
-    state.token = newToken;
-}
-
-export function logOut(state){
-    state.user.name = null
-    state.user.email = null
-    state.token = null
+export function SET_NEW_USER(state, value) {
+    state.newUser = value
 }

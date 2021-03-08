@@ -4,6 +4,7 @@ export default function() {
             token: null,
             name:null,
             email: null,
-        }]      
+        }] , 
+        newUser:''    
     }
 }

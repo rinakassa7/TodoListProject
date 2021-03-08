@@ -23,13 +23,13 @@
 {{signIn}}
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "Register",
 
   data() {
     return {
-      UserDetail: {
+      UserData: {
         name: "",
         email: "",
         password: "",
@@ -38,10 +38,22 @@ export default {
   },
 
   methods: {
-      ...mapActions(["Register"]),
+      ...mapActions('account', ['register']),
       async signIn(){
-          this.Register(this.UserDetail);      
+          this.register(this.UserData);      
       }
+  },
+
+  computed:{
+    ...mapGetters('account',['getUser']),
+    newUser: {
+      get(){
+        return this.$store.state.UseData
+      },
+      set(value){
+        this.$store.commit('account/SET_NEW_USER', value)
+      }
+    }
   }
 };
 </script>
