@@ -1,9 +1,8 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper"> 
     <Title class="title" :activeList="activeList" />
     <Sidebar :activeList="activeList" @loadList="loadList" />
     <TodoList :id="activeList" />
-    <p v-if="info != null"> {{info["data"].token}} </p>
   </div>
 </template>
 
@@ -11,11 +10,10 @@
 import Title from '@/components/Title.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import TodoList from '@/components/TodoList.vue'
-
-const axios = require('axios');
+import {  mapGetters } from "vuex";
 
 export default {
-  name: 'App',
+  name: 'Home',
   data() {
     return {
       activeList: 0,
@@ -34,12 +32,14 @@ export default {
       this.activeList = id
     }
   },
-  
+  computed:{
+    ...mapGetters('account', ['isAuthentificated']),
+  },
   mounted () {
-    axios
-      .post('http://138.68.74.39/api/login?email=toto@toto.com&password=totototo')
-      .then(response => (this.info = response))
-      console.log(this.info)
+    if(!this.isAuthentificated ){
+        console.log(this.isAuthentificated)
+        this.$router.push({ name: 'LoginRegister', query: { redirect: '/' } });
+    }
   }
 }
 </script>

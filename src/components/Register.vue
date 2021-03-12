@@ -2,18 +2,18 @@
 
   <div id="register-section" class="container p-4 shadow-lg p-3 mb-5 bg-body rounded mt-5">
   <h3>Register</h3>
-   <form action="/LoginRegister" method="POST">
+   <form @submit.prevent="register({name,email,password})">
        <div class="mb-3">
           <label for="exampleInputName1" class="form-label">Name</label>
-          <input type="text" class="form-control" id="exampleInputName1" >
+          <input type="text" class="form-control" id="exampleInputName1" v-model="name">
       </div>
        <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="email">
       </div>
       <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1">
+          <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
       </div>
 
       <button type="submit" class="btn btn-primary">Register</button>
@@ -29,31 +29,18 @@ export default {
 
   data() {
     return {
-      UserData: {
         name: "",
         email: "",
         password: "",
-      },
     };
   },
 
   methods: {
       ...mapActions('account', ['register']),
-      async signIn(){
-          this.register(this.UserData);      
-      }
   },
 
   computed:{
-    ...mapGetters('account',['getUser']),
-    newUser: {
-      get(){
-        return this.$store.state.UseData
-      },
-      set(value){
-        this.$store.commit('account/SET_NEW_USER', value)
-      }
-    }
+    ...mapGetters('account',['getToken','getDataUser']),
   }
 };
 </script>
