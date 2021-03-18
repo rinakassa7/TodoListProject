@@ -3,12 +3,12 @@
     <h3 class="mb-3">Login</h3>
    <form @submit.prevent="login({email, password})">
        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" v-model="email">
+          <label for="login_email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="login_email" aria-describedby="emailHelp" v-model="email">
       </div>
       <div class="mb-3">
-          <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" v-model="password">
+          <label for="login_password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="login_password" v-model="password">
       </div>
 
       <button type="submit" class="btn btn-primary">Login</button>

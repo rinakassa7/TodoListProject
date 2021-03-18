@@ -10,7 +10,7 @@
 import Title from '@/components/Title.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import TodoList from '@/components/TodoList.vue'
-import {  mapGetters } from "vuex";
+import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: 'Home',
@@ -26,8 +26,8 @@ export default {
     TodoList,
     
   },
-  
   methods: {
+    ...mapActions('todoList', ['getTodosLists']),
     loadList(id) {
       this.activeList = id
     }
@@ -35,17 +35,17 @@ export default {
   computed:{
     ...mapGetters('account', ['isAuthentificated']),
   },
-  mounted () {
-    if(!this.isAuthentificated ){
-        console.log(this.isAuthentificated)
-        this.$router.push({ name: 'LoginRegister', query: { redirect: '/' } });
+  mounted() {
+    if(!this.isAuthentificated) {
+      this.$router.push({ name: 'LoginRegister', query: { redirect: '/' } });
+    } else {
+      this.getTodosLists()
     }
   }
 }
 </script>
 
 <style>
-
 .wrapper {
   display: grid;
   grid-template-columns: 350px auto;

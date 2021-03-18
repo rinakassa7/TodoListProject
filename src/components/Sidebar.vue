@@ -39,11 +39,15 @@ export default {
         },
     },
     methods: {
-        ...mapActions('todoList', ['addList','removeList']),
+        ...mapActions('todoList', ['addList','removeList', 'getTodosLists']),
         loadList (id) {
             this.$emit('loadList', id)
         }
-    }
+    },
+    /*
+    mounted() {
+        this.getTodosLists()
+    }*/
 }
 </script>
 

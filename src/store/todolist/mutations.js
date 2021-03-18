@@ -42,3 +42,7 @@ export function ADD_LIST(state) {
     state.lists.push(list)
     state.newList = ''
 }
+
+export function SET_LISTS(state, lists) {
+    state.lists = lists;
+}

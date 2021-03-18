@@ -28,7 +28,7 @@ export default {
     id: {type: Number}
   },
   methods: {
-    ...mapActions('todoList', ['addTodo', 'removeTodo', 'todoCompleted']),
+    ...mapActions('todoList', ['addTodo', 'removeTodo', 'todoCompleted', 'getTodos']),
     setFilter(value) {
       this.$store.commit('todoList/SET_FILTER', value)
     }
@@ -44,6 +44,9 @@ export default {
       }
     },   
   },
+  mounted() {
+    this.getTodos(this.id)
+  }
 }
 </script>
 

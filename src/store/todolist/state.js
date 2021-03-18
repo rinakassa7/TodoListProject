@@ -13,7 +13,7 @@ export default function() {
                     {
                         id: 1,
                         name : 'acheter du lait',
-                        completed : false
+                        completed : true
                     },
                 ]
             },

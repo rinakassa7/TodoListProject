@@ -1,10 +1,10 @@
 <template>
   <div id="nav">
-    <router-link to="/">LoginRegister</router-link> |
+    <router-link to="/">Login / Register</router-link> |
     <router-link to="/Home">Home</router-link> |
     <router-link to="/LogOut">LogOut</router-link>
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 
@@ -18,15 +18,15 @@
 }
 
 #nav {
-  padding: 30px;
+  padding: 30px 0;
 }
 
 #nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  padding: 0 10px;
 }
 
 #nav a.router-link-exact-active {
   color: #42b983;
+  text-decoration: none;
 }
 </style>
