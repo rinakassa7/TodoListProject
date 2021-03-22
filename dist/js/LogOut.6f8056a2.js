@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["LogOut"],{"0c9e":function(n,e,c){"use strict";c.r(e);var o=c("7a23");function t(n,e){return Object(o["p"])(),Object(o["d"])("h1",null,"Déconnexion réussie !!")}const u={};u.render=t;e["default"]=u}}]);
-//# sourceMappingURL=LogOut.6f8056a2.js.map
