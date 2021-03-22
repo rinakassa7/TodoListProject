@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h1>{{ listName(activeList) }}</h1>
+        <h1 v-if="activeList">{{ listName(activeList) }}</h1>
     </header>
 </template>
 
@@ -9,11 +9,8 @@ import {mapGetters} from 'vuex'
 
 export default {
     name: 'Title',
-    props: {
-      activeList: {type: Number}
-    },
     computed: {
-      ...mapGetters('todoList', ['listName']),
+      ...mapGetters('todoList', ['activeList', 'listName']),
     }
 }
 </script>

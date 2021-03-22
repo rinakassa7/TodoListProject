@@ -1,79 +1,64 @@
 <template>
 
     <aside class="shadow-lg p-3 mb-5 bg-body rounded">
-        <form @submit.prevent="addList()">
-            <input type="text" v-model="newList">
-            <input type="submit" value="Add list">
-        </form>
-        <ul>
-            <li v-for="list in lists" 
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" v-model="newListName" @keyup.enter="newList()">
+            <button class="btn btn-primary" type="button" id="button-addon2" @click="newList()">Add New List</button>
+        </div>
+        <ul v-if="lists.length > 0" class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center"
+                v-for="list in lists" 
                 :key="list.id"
-                :class="{'activeList': list.id === activeList}"
+                :class="{'active': list.id === activeList}"
                 @click="loadList(list.id)"
             >
-                {{ list.name }}
-               <span> <button @click.stop="removeList([list.id])">&times;</button> </span>
+                {{ listName(list.id) }}
+                <button class="btn-close btn-close" @click.stop="removeList(list.id)" title="Remove List"></button>
             </li>
         </ul>
+        <div class="mt-3">Il vous reste <strong>{{ nbRemainingTodosGlobal }}</strong> tâche(s) à faire.</div>
     </aside>
 
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
     name: 'Sidebar',
-    props: {
-        activeList: {type: Number}
-    },
-    computed: {
-        ...mapState('todoList', ['lists']),
-        newList: {
-            get() {
-                return this.$store.state.newList
-            },
-            set(value) {
-                this.$store.commit('todoList/SET_NEW_LIST', value)
-            }
-        },
-    },
-    methods: {
-        ...mapActions('todoList', ['addList','removeList', 'getTodosLists']),
-        loadList (id) {
-            this.$emit('loadList', id)
+    data() {
+        return {
+            newListName: ""
         }
     },
-    /*
-    mounted() {
-        this.getTodosLists()
-    }*/
+    computed: {
+        ...mapGetters('todoList', ['activeList', 'lists', 'listName', 'nbRemainingTodosGlobal']),
+    },
+    methods: {
+        ...mapActions('todoList', ['createList', 'setActiveList', 'removeList']),
+        loadList (id) {
+            this.setActiveList(id)
+        },
+        newList() {
+            if (this.newListName !== "") {
+                this.createList(this.newListName)
+                this.newListName = ""
+            }
+        }
+    },
 }
 </script>
 
 <style scoped>
-
 aside {
   grid-area: sidebar;
 }
-ul {
-    list-style: none;
-    padding: 0;
-    
+.active {
+    background-color: tomato;
+    border-color: red;
 }
-li{
-   padding: 5px 5px 5px 5px;
-   margin-top: 5px;
-}
-li span{
-    float: right;
-    margin-top: -3.5px;
-}
+
 li:hover {
-    background: #eee;
-}
-.activeList {
-    color: Tomato;
-    font-weight: bold;
+    cursor: pointer;
 }
 </style>

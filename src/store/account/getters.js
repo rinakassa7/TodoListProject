@@ -1,6 +1,7 @@
-export const getToken = (state) => state.token;
-export const getDataUser = (state) => state.getDataUser;
+export const getToken = (state) => state.token
 
-export const isAuthentificated  = (state) => {
-    return state.token !== "";
+export const getUser = (state) => state.user
+
+export const isAuthentificated = (state) => {
+    return state.token !== ""
 }

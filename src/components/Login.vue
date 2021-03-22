@@ -1,23 +1,21 @@
 <template>
-<div id="login-section" class="container p-4 shadow-lg p-3 mb-5 bg-body rounded mt-5">
+<div class="container p-4 shadow-lg p-3 mb-5 bg-body rounded mt-5">
     <h3 class="mb-3">Login</h3>
-   <form @submit.prevent="login({email, password})">
-       <div class="mb-3">
-          <label for="login_email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="login_email" aria-describedby="emailHelp" v-model="email">
-      </div>
-      <div class="mb-3">
-          <label for="login_password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="login_password" v-model="password">
-      </div>
-
-      <button type="submit" class="btn btn-primary">Login</button>
-  </form>
+    <form @submit.prevent="login({email, password})">
+        <div class="input-group flex-nowrap my-2">
+            <span class="input-group-text" id="addon-wrapping">@</span>
+            <input type="text" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="addon-wrapping" v-model="email">
+        </div>
+        <div class="input-group flex-nowrap my-2">
+            <input type="password" class="form-control" placeholder="Password" aria-label="Password" v-model="password">
+        </div>
+        <button type="submit" class="btn-lg btn-primary my-2">Login</button>
+    </form>
 </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
   name: "Login",
 
@@ -29,18 +27,8 @@ export default {
   },
 
   methods: {
-      ...mapActions('account',['login']),
+      ...mapActions('account', ['login']),
      
-  },
-  computed:{
-      ...mapGetters('account', ['getToken','getDataUser'])
   }
 };
 </script>
-
-<style scoped>
-
-#login-section{
-    width: 30%;
-}
-</style>

@@ -1,8 +1,8 @@
 <template>
   <div class="wrapper"> 
-    <Title class="title" :activeList="activeList" />
-    <Sidebar :activeList="activeList" @loadList="loadList" />
-    <TodoList :id="activeList" />
+    <Title class="title" />
+    <Sidebar />
+    <TodoList />
   </div>
 </template>
 
@@ -14,32 +14,22 @@ import {mapGetters, mapActions} from "vuex";
 
 export default {
   name: 'Home',
-  data() {
-    return {
-      activeList: 0,
-      info : null
-    }
-  },
   components: {
     Title,
     Sidebar,
     TodoList,
-    
   },
   methods: {
-    ...mapActions('todoList', ['getTodosLists']),
-    loadList(id) {
-      this.activeList = id
-    }
+    ...mapActions('todoList', ['getLists']),
   },
   computed:{
     ...mapGetters('account', ['isAuthentificated']),
   },
   mounted() {
-    if(!this.isAuthentificated) {
+    if(!localStorage.getItem('token')) {
       this.$router.push({ name: 'LoginRegister', query: { redirect: '/' } });
     } else {
-      this.getTodosLists()
+      this.getLists()
     }
   }
 }
@@ -60,13 +50,11 @@ export default {
 .title {
   margin-left: -8rem;
 }
-select, input[type="text"], input[type="submit"] {
-    padding: .5rem 2rem;
-    margin-bottom: 1rem;
-}
+
 form {
     margin-top: 1rem;
 }
+
 input[type="submit"] {
     margin-left: .5rem;
 }

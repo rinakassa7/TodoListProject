@@ -1,18 +1,15 @@
-export function SET_NAME(state, userData) {
-    state.user.name = userData.name;
-}
-
-export function SET_EMAIL(state, userData) {
-    state.user.email = userData.email;
-}
-
 export function SET_TOKEN(state, token) {
     state.token = token
-    localStorage.setItem("token", token)
 }
 
-export function LOGOUT(state) {
-    state.token = "";
-    state.user.name = "";
-    state.user.email = "";
+export function SET_USER(state, user) {
+    state.user = user;
+}
+
+export function LOGOUT(state, rootState) {
+    state.token = ""
+    state.user = {}
+    rootState.todoList.activeList = null
+    rootState.todoList.lists = []
+    localStorage.removeItem('token')
 }
