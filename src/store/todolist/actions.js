@@ -65,19 +65,23 @@ export function addTodo({commit}, params) {
             'Authorization': 'Bearer '+ token
         }
         }).post('http://138.68.74.39/api/todo', null, {params: {name: params.name, completed: 0, todolist_id: params.listId}}).then(response => {
+        response.data.completed = parseInt(response.data.completed)
         commit('CREATE_TODO', response.data)
     }).catch(error => console.log(error))
 }
 
 export function completeTodo({commit}, params) {
-    commit('COMPLETE_TODO', params)
     let token = localStorage.getItem("token");
     axios.create({
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+ token
         }
-        }).post('http://138.68.74.39/api/completeTodo/' + params.todoId, null, {params: {name: params.name, completed: +!params.completed, todolist_id: params.listId}}).catch(error => console.log(error))
+        }).post('http://138.68.74.39/api/completeTodo/' + params.todoId, null,
+            {params: {name: params.name, completed: +!params.completed, todolist_id: params.listId}})
+        .then(() => {
+            commit('COMPLETE_TODO', params)
+        }).catch(error => console.log(error))
 }
 
 export function removeTodo({commit}, params) {
