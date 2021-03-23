@@ -35,7 +35,7 @@ export default {
         ...mapGetters('todoList', ['activeList', 'lists', 'listName', 'nbRemainingTodosGlobal']),
     },
     methods: {
-        ...mapActions('todoList', ['createList', 'setActiveList', 'removeList']),
+        ...mapActions('todoList', ['createList', 'setActiveList', 'removeList', 'getLists']),
         loadList (id) {
             this.setActiveList(id)
         },

@@ -37,7 +37,9 @@ export const filteredTodos = (state) => filter => {
 export const nbRemainingTodosGlobal = (state) => {
     let nbRemainingtodos = 0
     for (let i = 0; i < state.lists.length; i++) {
-        nbRemainingtodos += state.lists[i].todos.filter(t => t.completed == 0).length
+        if(state.lists[i].todos != null){
+            nbRemainingtodos += state.lists[i].todos.filter(t => t.completed == 0).length
+        }
     }
     return nbRemainingtodos
 }

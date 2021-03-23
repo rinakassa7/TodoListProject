@@ -12,7 +12,7 @@ export function getLists({commit}) {
     }).catch(error => console.log(error))
 }
 
-export function createList({commit}, name) {
+export function createList({commit, dispatch}, name) {
     let token = localStorage.getItem("token");
     axios.create({
         headers: {
@@ -21,6 +21,7 @@ export function createList({commit}, name) {
         }
         }).post('http://138.68.74.39/api/todolist?name=' + name).then(response => {
         commit("CREATE_LIST", response.data)
+        dispatch("setActiveList", response.data.id)
     }).catch(error => console.log(error))
 }
 
