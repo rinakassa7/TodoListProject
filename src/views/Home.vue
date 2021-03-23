@@ -1,8 +1,8 @@
 <template>
-  <div class="wrapper">
-    <Title class="title" :activeList="activeList" />
-    <Sidebar :activeList="activeList" @loadList="loadList" />
-    <TodoList :id="activeList" />
+  <div class="wrapper"> 
+    <Title class="title" />
+    <Sidebar />
+    <TodoList />
   </div>
 </template>
 
@@ -10,40 +10,32 @@
 import Title from '@/components/Title.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import TodoList from '@/components/TodoList.vue'
+import {mapGetters, mapActions} from "vuex";
 
-const axios = require('axios');
-/*<p v-if="info != null"> {{info["data"].token}} </p>*/
 export default {
-  name: 'App',
-  data() {
-    return {
-      activeList: 0,
-      info : null
-    }
-  },
+  name: 'Home',
   components: {
     Title,
     Sidebar,
     TodoList,
-    
   },
-  
   methods: {
-    loadList(id) {
-      this.activeList = id
-    }
+    ...mapActions('todoList', ['getLists']),
   },
-  mounted () {
-    axios
-      .post('http://138.68.74.39/api/login?email=toto@toto.com&password=totototo')
-      .then(response => (this.info = response))
-      console.log(this.info)
+  computed:{
+    ...mapGetters('account', ['isAuthentificated']),
+  },
+  mounted() {
+    if(!localStorage.getItem('token')) {
+      this.$router.push({ name: 'LoginRegister', query: { redirect: '/' } });
+    } else {
+      this.getLists()
+    }
   }
 }
 </script>
 
 <style>
-
 .wrapper {
   display: grid;
   grid-template-columns: 350px auto;
@@ -58,13 +50,11 @@ export default {
 .title {
   margin-left: -8rem;
 }
-select, input[type="text"], input[type="submit"] {
-    padding: .5rem 2rem;
-    margin-bottom: 1rem;
-}
+
 form {
     margin-top: 1rem;
 }
+
 input[type="submit"] {
     margin-left: .5rem;
 }

@@ -1,44 +1,46 @@
-export function TODO_COMPLETED(state, [idList, idTodo]) {
-    const t = state.lists[idList].todos[idTodo]
-    t.completed = !t.completed
+export function SET_LISTS(state, lists) {
+    state.lists = lists
+    if (lists.length > 0) state.activeList = state.lists[0].id
 }
 
-export function REMOVE_TODO(state, [idList, idTodo]) {
-    state.lists[idList].todos.splice(idTodo, 1)
+export function SET_TODOS(state, params) {
+    const list = state.lists.find(l => l.id === params.listID)
+    if (list) list.find(l => l.id === params.listID).todos = params.todos
 }
 
-export function REMOVE_LIST(state, [idList]) {
-    state.lists.splice(idList, 1)
-}
-
-export function ADD_TODO(state, idList) {
-    const todo = {
-        id: state.lists[idList].todos.length,
-        name: state.newTodo,
-        completed: false
-    }
-    state.lists[idList].todos.push(todo)
-    state.newTodo = ''
-}
-
-export function SET_NEW_TODO(state, value) {
-    state.newTodo = value
-}
-
-export function SET_NEW_LIST(state, value) {
-    state.newList = value
-}
-
-export function SET_FILTER(state, value) {
-    state.filter = value
-}
-
-export function ADD_LIST(state) {
-    const list = {
-        id: state.lists.length,
-        name: state.newList,
-        todos: []
-    }
+export function CREATE_LIST(state, list) {
     state.lists.push(list)
-    state.newList = ''
+    state.activeList = list.id
+}
+
+export function DELETE_LIST(state, listID) {
+    const index = state.lists.findIndex(l => l.id === listID)
+    state.lists.splice(index, 1)
+    state.activeList = null
+}
+
+export function SET_ACTIVE_LIST(state, listID) {
+    state.activeList = listID
+}
+
+export function CREATE_TODO(state, params) {
+    const list = state.lists.find(l => l.id === params.todolist_id)
+    if (!list.todos) list["todos"] = []
+    list.todos.push(params)
+}
+
+export function COMPLETE_TODO(state, params) {
+    const list = state.lists.find(l => l.id === params.listId)
+    const todo = list.todos.find(t => t.id === params.todoId)
+    todo.completed = +!params.completed
+}
+
+export function DELETE_TODO(state, params) {
+    const list = state.lists.find(l => l.id === params.listId)
+    const index = list.todos.findIndex(t => t.id === params.todoId)
+    list.todos.splice(index, 1)
+}
+
+export function MODIFY_TODO_NAME(state, params) {
+    state.lists.find(l => l.id === params.listId).todos.find(t => t.id === params.todoId).name = params.text;
 }
